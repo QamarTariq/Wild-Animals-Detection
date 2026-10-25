@@ -63,7 +63,7 @@ if uploaded_file is not None:
     st.write("---")
     
     # Error Handling (Non-animal ya kam confidence par error)
-    if confidence < 60.0:
+    if confidence < 25.0:
         st.error("❌ **Error: This is not a recognized animal!** Please upload a valid animal photo.")
     else:
         st.success(f"✅ Prediction: **{predicted_class.upper()}**")
