@@ -3,19 +3,38 @@ import tensorflow as tf
 from PIL import Image
 import numpy as np
 import os
-import gdown  # Terminal ya requirements.txt mein 'gdown' add karna hoga
+import gdown
 
 st.set_page_config(page_title="Wild Animal Detector", page_icon="🐾", layout="centered")
 
-st.markdown("<h1 style='text-align: center; color: #2d3436;'>🐾 Wild Animal Detection AI</h1>", unsafe_allow_html=True)
+# Beautiful Background & UI Styling
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background: linear-gradient(to right, #f8ffae, #43c6ac);
+        background-attachment: fixed;
+    }
+    .main-title {
+        color: #1f4068;
+        text-align: center;
+        font-weight: bold;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown("<h1 class='main-title'>🐾 Wild Animal Detection AI</h1>", unsafe_allow_html=True)
+st.write("Upload an image of a Cat, Elephant, Lion, Panda, or Tiger!")
 
 # Google Drive se model automatically download karne ka function
 @st.cache_resource
 def load_my_model():
     model_path = 'animal_model.h5'
     if not os.path.exists(model_path):
-        # Yahan apna Google Drive ka file ID daalein
-        file_id = 'YOUR_GOOGLE_DRIVE_FILE_ID_HERE'
+        # Yahan apnay Google Drive file ki ID dalein (e.g., 1A2B3C4D...)
+        file_id = 'https://drive.google.com/file/d/1itvBWD5p0-STTjcm9tc_UIPjyghanRAn/view?usp=sharing'
         url = f'https://drive.google.com/uc?id={file_id}'
         gdown.download(url, model_path, quiet=False)
     
@@ -42,6 +61,8 @@ if uploaded_file is not None:
     confidence = float(np.max(predictions)) * 100
 
     st.write("---")
+    
+    # Error Handling (Non-animal ya kam confidence par error)
     if confidence < 60.0:
         st.error("❌ **Error: This is not a recognized animal!** Please upload a valid animal photo.")
     else:
