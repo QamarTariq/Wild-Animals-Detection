@@ -34,7 +34,7 @@ def load_my_model():
     model_path = 'animal_model.h5'
     if not os.path.exists(model_path):
         # Yahan apnay Google Drive file ki ID dalein (e.g., 1A2B3C4D...)
-        file_id = 1itvBWD5p0-STTjcm9tc_UIPjyghanRAn'
+        file_id = '1itvBWD5p0-STTjcm9tc_UIPjyghanRAn'
         url = f'https://drive.google.com/uc?id={file_id}'
         gdown.download(url, model_path, quiet=False)
     
